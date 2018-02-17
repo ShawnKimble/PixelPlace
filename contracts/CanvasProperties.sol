@@ -50,9 +50,9 @@ contract CanvasProperties {
           pixelColor: incomingPixelColor,
           pixelStatus: incomingPixelStatus
           }));
-          }
+    }
 
-  function get() public view returns (address) {
-    return CanvasAddress;
+  function get() public view returns (PixelProperty[]) {
+    return pixelProperties;
   }
 }
