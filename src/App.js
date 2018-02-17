@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
 import getWeb3 from './utils/getWeb3'
+import { button } from "@blueprintjs/core";
 
-//BP test
-//import { Spinner, Intent } from "@blueprintjs/core";
-
-import './css/oswald.css'
+import './fonts/supertext/style.css'
 import './css/open-sans.css'
 import './css/pure-min.css'
-import './css/normalize.css'
 import './css/@blueprintjs/core/dist/blueprint.css'
 import './App.css'
 
@@ -77,28 +74,33 @@ class App extends Component {
   }
 
   setupCanvas() {
-    var canvas = document.getElementById('pixelCanvas');
+    var canvas = document.getElementById('pixel-canvas');
     this.writeMessage(canvas);
 
+    /*
     canvas.addEventListener('mousemove', function(evt) {
       var mousePos = this.getMousePos(canvas, evt);
       var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
       this.writeMessage(canvas, message);
     }, false);
+    */
   }
 
   writeMessage(canvas, message) {
     var context = canvas.getContext('2d');
     
-    context.strokeStyle = "red"; // Draws the canvas border
+    context.strokeStyle = "black"; // Draws the canvas border
     context.rect(0, 0, 1000, 1000);
     context.stroke();
-    context.fillStyle = "red";
     
-    var step = 40;
-    for (var x = 0; x <= 10; x++) {
-        for(var y = 0; y <= 10; y++) {
-          context.fillRect(x*step, y*step, 20, 20);
+    var countOfGridSquares = 600;
+    var colors = ['red', 'blue', 'green'];  
+
+    var step = 8;
+    for (var x = 0; x <= countOfGridSquares; x++) {
+        for(var y = 0; y <= countOfGridSquares; y++) {
+          context.fillRect(x*step, y*step, 8, 8);
+          context.fillStyle = colors[Math.floor(Math.random() * colors.length)];
         }
     }
   }
@@ -112,19 +114,47 @@ class App extends Component {
   }
 
   render() {
+    //@TODO: get actual values from contract
+    const ethAvgPixelCost = 0.0002;
+    const ethFundedAmt = 18.2910;
+    const projectEdits = '1,291';
+
     return (
       <div className="App">
         <nav className="navbar pure-menu pure-menu-horizontal">
             <a href="#" className="pure-menu-heading pure-menu-link">PixelPlace</a>
         </nav>
 
-        <main className="container">
-          <div className="pure-g">
-            <div className="pure-u-1-1">
-              <canvas id="pixelCanvas" width="800" height="800" />
+        <div id="main" className="container">
+          <div className="col">
+            <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
+              <span className="pt-icon-standard pt-icon-edit"></span>
+              Edit Project
+            </button>
+          </div>
+          <div className="col">
+            <div id="pixel-canvas-wrapper">
+              <canvas id="pixel-canvas" width="600" height="600" />
             </div>
           </div>
-        </main>
+          <div className="col">
+            <div className='panel'>
+              <h1>Project Details</h1>
+              <span>ethdenver project</span>
+              <span>Hello ethdenver! Welcome to the first live demo of Pixel Place; the blockchain-enabled art project!</span>
+
+              <h2 style={{ marginTop: 25 }}>Project Stats</h2>
+              <span>{`${ethAvgPixelCost} ETH/pixel`}</span>
+              <span>{`${ethFundedAmt} ETH funded`}</span>
+              <span>{`${projectEdits} project edits`}</span>
+            </div>
+
+            <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
+              <span className="pt-icon-standard pt-icon-edit"></span>
+              Share Project
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
