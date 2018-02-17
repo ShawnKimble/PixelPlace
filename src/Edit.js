@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
-import getWeb3 from './utils/getWeb3'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import SimpleStorageContract from '../build/contracts/SimpleStorage.json';
+import getWeb3 from './utils/getWeb3';
 import { button } from "@blueprintjs/core";
 import { SketchPicker } from 'react-color';
 import Nav from './Nav';
@@ -147,10 +148,12 @@ class Edit extends Component {
                 <span>{`${projectEdits} project edits`}</span>
                 </div>
 
-                <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
-                <span className="pt-icon-standard pt-icon-edit"></span>
-                Share Project
-                </button>
+                <Link to="/">
+                    <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
+                    <span className="pt-icon-standard pt-icon-edit"></span>
+                    Cancel
+                    </button>
+                </Link>
             </div>
         </div>
       </div>

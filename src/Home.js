@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
-import getWeb3 from './utils/getWeb3'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import SimpleStorageContract from '../build/contracts/SimpleStorage.json';
+import getWeb3 from './utils/getWeb3';
 import { button } from "@blueprintjs/core";
 import Nav from './Nav';
 
@@ -119,10 +120,12 @@ class Home extends Component {
         <Nav />
         <div id="main" className="container">
             <div className="col">
-                <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
-                <span className="pt-icon-standard pt-icon-edit"></span>
-                Edit Project
-                </button>
+                <Link to="/edit">
+                    <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
+                    <span className="pt-icon-standard pt-icon-edit"></span>
+                    Edit Project
+                    </button>
+                </Link>
             </div>
             <div className="col">
                 <div id="pixel-canvas-wrapper">
