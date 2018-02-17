@@ -97,6 +97,7 @@ h1, h2, h3 {
 
 .panel > span {
   display: block;
+  margin-top: 13px;
 }
 
 #pixel-canvas-wrapper, .panel {

@@ -1,24 +1,18 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import React, { Component } from 'react'
 import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
 import getWeb3 from './utils/getWeb3'
-import Home from './Home';
-import Edit from './Edit';
+import { button } from "@blueprintjs/core";
+import { SketchPicker } from 'react-color';
+import Nav from './Nav';
 
-import './fonts/supertext/style.css'
-import './css/open-sans.css'
-import './css/pure-min.css'
-import './css/@blueprintjs/core/dist/blueprint.css'
-import './App.css'
-
-class App extends Component {
+class Edit extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
       storageValue: 0,
       web3: null,
-      activeViewName: "Home" //or Edit
+      background: '#fff'
     }
   }
 
@@ -108,12 +102,6 @@ class App extends Component {
     }
   }
 
-  changeActiveView(viewName) {
-    this.setState({
-      activeViewName: viewName
-    });
-  }
-
   getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
     return {
@@ -122,28 +110,52 @@ class App extends Component {
     };
   }
 
-  renderView() {
-    if (this.state.activeViewName === "Home") {
-      return <Home />;
-    } else {
-      return <Edit />;
-    }
+  handleChangeComplete = (color) => {
+    this.setState({ background: color.hex });
   }
 
   render() {
-    return (
-      <Router>
-          <div>
-            <nav className="navbar pure-menu pure-menu-horizontal">
-              <Link to="/" className="pure-menu-heading pure-menu-link">PixelPlace</Link>
-            </nav>
+    //@TODO: get actual values from contract
+    const ethAvgPixelCost = 0.0002;
+    const ethFundedAmt = 18.2910;
+    const projectEdits = '1,291';
 
-            <Route exact path="/" component={Home} />
-            <Route path="/edit" component={Edit} />
-          </div>
-        </Router>
+    return (
+        <div className="App">
+            <Nav />
+            <div id="main" className="container">
+            <div className="col">
+                <SketchPicker
+                    color={ this.state.background }
+                    onChangeComplete={ this.handleChangeComplete }
+                />
+            </div>
+            <div className="col">
+                <div id="pixel-canvas-wrapper">
+                <canvas id="pixel-canvas" width="600" height="600" />
+                </div>
+            </div>
+            <div className="col">
+                <div className='panel'>
+                <h1>Project Details</h1>
+                <span>ethdenver project</span>
+                <span>Hello ethdenver! Welcome to the first live demo of Pixel Place; the blockchain-enabled art project!</span>
+
+                <h2 style={{ marginTop: 25 }}>Project Stats</h2>
+                <span>{`${ethAvgPixelCost} ETH/pixel`}</span>
+                <span>{`${ethFundedAmt} ETH funded`}</span>
+                <span>{`${projectEdits} project edits`}</span>
+                </div>
+
+                <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
+                <span className="pt-icon-standard pt-icon-edit"></span>
+                Share Project
+                </button>
+            </div>
+        </div>
+      </div>
     );
   }
 }
 
-export default App;
+export default Edit;
