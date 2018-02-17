@@ -1,14 +1,8 @@
-<<<<<<< Updated upstream
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import SimpleStorageContract from '../build/contracts/SimpleStorage.json';
+import CanvasPropertiesContract from '../build/contracts/SimpleStorage.json';
 import getWeb3 from './utils/getWeb3';
-=======
-import React, { Component } from 'react'
-import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
-import CanvasPropertiesContract from '../build/contracts/SimpleStorage.json'
-import getWeb3 from './utils/getWeb3'
->>>>>>> Stashed changes
 import { button } from "@blueprintjs/core";
 import Nav from './Nav';
 
