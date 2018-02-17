@@ -3,7 +3,7 @@ import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
 import getWeb3 from './utils/getWeb3'
 
 //BP test
-import { Spinner, Intent } from "@blueprintjs/core";
+//import { Spinner, Intent } from "@blueprintjs/core";
 
 import './css/oswald.css'
 import './css/open-sans.css'
@@ -33,11 +33,15 @@ class App extends Component {
       })
 
       // Instantiate contract once web3 provided.
-      this.instantiateContract()
+      //this.instantiateContract()
     })
     .catch(() => {
       console.log('Error finding web3.')
     })
+  }
+
+  componentDidMount() {
+    this.setupCanvas();
   }
 
   instantiateContract() {
@@ -72,23 +76,52 @@ class App extends Component {
     })
   }
 
+  setupCanvas() {
+    var canvas = document.getElementById('pixelCanvas');
+    this.writeMessage(canvas);
+
+    canvas.addEventListener('mousemove', function(evt) {
+      var mousePos = this.getMousePos(canvas, evt);
+      var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+      this.writeMessage(canvas, message);
+    }, false);
+  }
+
+  writeMessage(canvas, message) {
+    var context = canvas.getContext('2d');
+    
+    context.strokeStyle = "red"; // Draws the canvas border
+    context.rect(0, 0, 1000, 1000);
+    context.stroke();
+    context.fillStyle = "red";
+    
+    var step = 40;
+    for (var x = 0; x <= 10; x++) {
+        for(var y = 0; y <= 10; y++) {
+          context.fillRect(x*step, y*step, 20, 20);
+        }
+    }
+  }
+
+  getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+    };
+  }
+
   render() {
     return (
       <div className="App">
         <nav className="navbar pure-menu pure-menu-horizontal">
-            <a href="#" className="pure-menu-heading pure-menu-link">Truffle Box</a>
+            <a href="#" className="pure-menu-heading pure-menu-link">PixelPlace</a>
         </nav>
 
         <main className="container">
           <div className="pure-g">
             <div className="pure-u-1-1">
-              <h1>Good to Go!</h1>
-              <Spinner intent={Intent.PRIMARY} />
-              <p>Your Truffle Box is installed and ready.</p>
-              <h2>Smart Contract Example</h2>
-              <p>If your contracts compiled and migrated successfully, below will show a stored value of 5 (by default).</p>
-              <p>Try changing the value stored on <strong>line 59</strong> of App.js.</p>
-              <p>The stored value is: {this.state.storageValue}</p>
+              <canvas id="pixelCanvas" width="800" height="800" />
             </div>
           </div>
         </main>
