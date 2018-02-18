@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import SimpleStorageContract from '../build/contracts/SimpleStorage.json';
-//import CanvasPropertiesContract from '../build/contracts/SimpleStorage.json';
 import getWeb3 from './utils/getWeb3';
 import { button, Icon } from '@blueprintjs/core';
 //import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -49,7 +48,6 @@ class Home extends Component {
 
     const contract = require('truffle-contract')
     const simpleStorage = contract(SimpleStorageContract)
-   // const canvasProperties = contract(CanvasPropertiesContract)
     simpleStorage.setProvider(this.state.web3.currentProvider)
   //  canvasProperties.setProvider(this.state.web3.currentProvider)
 
@@ -58,18 +56,21 @@ class Home extends Component {
 
     // Get accounts.
     this.state.web3.eth.getAccounts((error, accounts) => {
-      simpleStorage.deployed().then((instance) => {
+    //  simpleStorage.deployed("anvasName", 600, 600).then((instance) => {
+      simpleStorage.deployed().then((instance) => {  
         simpleStorageInstance = instance
         // Stores a given value, 5 by default.
-        return simpleStorageInstance.set(5, {from: accounts[0]})
-       //  return simpleStorageInstance.UpdatePixels.set(333, "ff0000", "inPixelStatus");
+       // return simpleStorageInstance.set(5, {from: accounts[0]})
+        return simpleStorageInstance.UpdatePixels(333, "ff0000", "inPixelStatus", {from: accounts[0]});
       }).then((result) => {
         console.log("waitin....")
         // Get the value from the contract to prove it worked.
-        return simpleStorageInstance.get.call(accounts[0])
+        //return simpleStorageInstance.get.call(accounts[0])
+        return simpleStorageInstance.getPixelProperty(accounts[0])
       }).then((result) => {
         // Update state with the result.
-        return this.setState({ storageValue: result.c[0] })
+       // return this.setState({ storageValue: result.c[0] })
+      console.log("get result " + result)
       })
     })
   }

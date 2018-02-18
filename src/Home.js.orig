@@ -1,15 +1,14 @@
-<<<<<<< Updated upstream
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import SimpleStorageContract from '../build/contracts/SimpleStorage.json';
+//import CanvasPropertiesContract from '../build/contracts/SimpleStorage.json';
 import getWeb3 from './utils/getWeb3';
+<<<<<<< Updated upstream
+import { button, Icon } from '@blueprintjs/core';
+//import { CopyToClipboard } from 'react-copy-to-clipboard';
 =======
-import React, { Component } from 'react'
-import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
-import CanvasPropertiesContract from '../build/contracts/SimpleStorage.json'
-import getWeb3 from './utils/getWeb3'
->>>>>>> Stashed changes
 import { button } from "@blueprintjs/core";
+>>>>>>> Stashed changes
 import Nav from './Nav';
 
 class Home extends Component {
@@ -33,7 +32,7 @@ class Home extends Component {
       })
 
       // Instantiate contract once web3 provided.
-      //this.instantiateContract()
+      this.instantiateContract()
     })
     .catch(() => {
       console.log('Error finding web3.')
@@ -54,27 +53,53 @@ class Home extends Component {
 
     const contract = require('truffle-contract')
     const simpleStorage = contract(SimpleStorageContract)
+    //const canvasProperties = contract(CanvasPropertiesContract)
     simpleStorage.setProvider(this.state.web3.currentProvider)
+    //canvasProperties.setProvider(this.state.web3.currentProvider)
 
     // Declaring this for later so we can chain functions on SimpleStorage.
-    var simpleStorageInstance
+    var simpleStorageInstance;
 
     // Get accounts.
     this.state.web3.eth.getAccounts((error, accounts) => {
       simpleStorage.deployed().then((instance) => {
         simpleStorageInstance = instance
-
         // Stores a given value, 5 by default.
         return simpleStorageInstance.set(5, {from: accounts[0]})
       }).then((result) => {
+        console.log("waitin....")
         // Get the value from the contract to prove it worked.
-        return simpleStorageInstance.get.call(accounts[0])
+       // return simpleStorageInstance.get.call(accounts[0])
+       return simpleStorageInstance.UpdatePixels.set(273, "red", "dashPixelStatus");
       }).then((result) => {
         // Update state with the result.
         return this.setState({ storageValue: result.c[0] })
-      })
+      }).then((result) => {
+        // Update state with the result.
+      //  return simpleStorageInstance.get.call(accounts[0])
+      return simpleStorageInstance.getPixelProperty.call(accounts[0])
+      
+    })
     })
   }
+
+  // this.state.web3.eth.getAccounts((error, accounts) => {
+  //   canvasProperties.deployed().then((instance) => {
+  //     canvasPropertiesInstance = instance
+
+  //     // Stores a given value, 5 by default.
+  //     return canvasPropertiesInstance.set(888, {from: accounts[0]})
+  //   }).then((result) => {
+  //     console.log("waitin canvasPropertiesInstance....")
+  //     // Get the value from the contract to prove it worked.
+  //     return canvasPropertiesInstance.get.call(accounts[0])
+  //   }).then((result) => {
+  //     // Update state with the result.
+  //     console.log("ddddddd")
+  //     return this.setState({ storageValue: result.c[0] })
+  //   })
+  // })
+
 
   setupCanvas() {
     var canvas = document.getElementById('pixel-canvas');
@@ -127,12 +152,21 @@ class Home extends Component {
         <Nav />
         <div id="main" className="container">
             <div className="col">
-                <Link to="/edit">
-                    <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
-                    <span className="pt-icon-standard pt-icon-edit"></span>
-                    Edit Project
-                    </button>
-                </Link>
+                <div style={{ flexDirection: 'row', width: 300 }}>
+                    <Link to="/edit">
+                        <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
+                        <span className="pt-icon-standard pt-icon-edit"></span>
+                            Edit
+                        </button>
+                    </Link>
+
+                    <Link to="#">
+                        <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300, marginTop: 20 }}>
+                        <span className="pt-icon-standard pt-icon-play"></span>
+                            Replay
+                        </button>
+                    </Link>
+                </div>
             </div>
             <div className="col">
                 <div id="pixel-canvas-wrapper">
@@ -152,8 +186,13 @@ class Home extends Component {
                 </div>
 
                 <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
+<<<<<<< Updated upstream
+                    <Icon iconName='social-media' className='ico' />
+                    Share Craft
+=======
                 <span className="pt-icon-standard pt-icon-edit"></span>
                 Share Project
+>>>>>>> Stashed changes
                 </button>
             </div>
         </div>

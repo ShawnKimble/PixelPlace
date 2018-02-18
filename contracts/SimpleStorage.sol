@@ -26,12 +26,12 @@ contract SimpleStorage {
     
     address canvasAddress;
     // this is the function that runs first to set up the canvas state.
-     function SimpleStorage(string canvasName, uint canvasWidth, uint canvasHeight) public {    
-        canvasAddress = msg.sender; 
-        canvas[canvasAddress].canvasName = "Hello World Yall";
-        canvas[canvasAddress].canvasWidth = canvasWidth;
-        canvas[canvasAddress].canvasHeight = canvasHeight;
-    }
+    //  function SimpleStorage(string canvasName, uint canvasWidth, uint canvasHeight) public {    
+    //     canvasAddress = msg.sender; 
+    //     canvas[canvasAddress].canvasName = canvasName;
+    //     canvas[canvasAddress].canvasWidth = canvasWidth;
+    //     canvas[canvasAddress].canvasHeight = canvasHeight;
+    // }
 //this is used to track the pixels on the canvas.
     struct PixelProperty {
     uint pixelIndex; //this reperesents the location of the pixel on the canvas.
@@ -51,9 +51,10 @@ contract SimpleStorage {
       pixelProperties.push(pixelProperty);
     }
     
- //function getPixelProperty() public view returns (PixelProperty[]) {
- //   return pixelProperties;
- // }
+ function getPixelProperty() public view returns (string) {
+   return pixelProperties[0].pixelColor;
+   //return "999999";
+ }
  
     
 }
