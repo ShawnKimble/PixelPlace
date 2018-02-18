@@ -94,10 +94,10 @@ class Home extends Component {
 
   setupCanvas() {
     var canvas = document.getElementById('pixel-canvas');
-    this.writeMessage(canvas);
+    this.drawGrid(canvas);
   }
 
-  writeMessage(canvas, message) {
+  drawGrid(canvas, message) {
     var context = canvas.getContext('2d');
     
     context.strokeStyle = "black"; // Draws the canvas border

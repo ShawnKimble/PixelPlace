@@ -14,7 +14,9 @@ class Edit extends Component {
     this.state = {
       storageValue: 0,
       web3: null,
-      background: '#fff'
+      background: '#fff',
+      selectedGridX: null,
+      selectedGridY: null
     }
   }
 
@@ -41,53 +43,38 @@ class Edit extends Component {
   }
 
   instantiateContract() {
-    /*
-     * SMART CONTRACT EXAMPLE
-     *
-     * Normally these functions would be called in the context of a
-     * state management library, but for convenience I've placed them here.
-     */
-
-    const contract = require('truffle-contract')
-    const simpleStorage = contract(SimpleStorageContract)
-    simpleStorage.setProvider(this.state.web3.currentProvider)
-
-    // Declaring this for later so we can chain functions on SimpleStorage.
-    var simpleStorageInstance
-
-    // Get accounts.
-    this.state.web3.eth.getAccounts((error, accounts) => {
-      simpleStorage.deployed().then((instance) => {
-        simpleStorageInstance = instance
-
-        // Stores a given value, 5 by default.
-        return simpleStorageInstance.set(5, {from: accounts[0]})
-      }).then((result) => {
-        // Get the value from the contract to prove it worked.
-        return simpleStorageInstance.get.call(accounts[0])
-      }).then((result) => {
-        // Update state with the result.
-        return this.setState({ storageValue: result.c[0] })
-      })
-    })
+    
   }
 
   setupCanvas() {
     var canvas = document.getElementById('pixel-canvas');
-    this.writeMessage(canvas);
+    this.drawGrid(canvas);
 
+    //Add grid click listener
+    this.setupGridClickHandler(canvas);
+  }
+
+  setupGridClickHandler(canvas) {
     canvas.addEventListener('click', (event) => {
-      var context = canvas.getContext('2d');
-      var mousePosition = this.getMousePosition(canvas, event);
-      var gridX = Math.floor(parseInt(mousePosition.x, 10) / 8);
-      var gridY = Math.floor(parseInt(mousePosition.y, 10) / 8);
-      
-      context.fillRect(gridX * 8, gridY * 8, 8, 8);
-      context.fillStyle = 'white';
+        var context = canvas.getContext('2d');
+
+        //Use the current mouse position to determine the seected grid block
+        var mousePosition = this.getMousePosition(canvas, event);
+        var gridX = Math.floor(parseInt(mousePosition.x, 10) / 8);
+        var gridY = Math.floor(parseInt(mousePosition.y, 10) / 8);
+
+        //Fill in the selected block with the users color selection
+        context.fillRect(gridX * 8, gridY * 8, 8, 8);
+        context.fillStyle = this.state.background;
+
+        this.setState({
+            selectedGridX: gridX,
+            selectedGridY: gridY
+        });
     }, false);
   }
 
-  writeMessage(canvas, message) {
+  drawGrid(canvas, message) {
     var context = canvas.getContext('2d');
     
     context.strokeStyle = "black"; // Draws the canvas border
@@ -115,8 +102,12 @@ class Edit extends Component {
     };
   }
 
-  handleChangeComplete = (color) => {
+  handleColorChange = (color) => {
     this.setState({ background: color.hex });
+  }
+
+  handleSubmit = () => {
+      console.log('@@@@@@SUBMIT', this.state.selectedGridX, this.state.selectedGridY);
   }
 
   render() {
@@ -132,7 +123,7 @@ class Edit extends Component {
             <div className="col">
                 <SketchPicker
                     color={ this.state.background }
-                    onChangeComplete={ this.handleChangeComplete }
+                    onChangeComplete={ this.handleColorChange }
                 />
             </div>
             <div className="col">
@@ -158,11 +149,13 @@ class Edit extends Component {
                 </div>
 
                 <div style={{ flexDirection: 'row' }}>
-                    <Link to="/">
-                        <button type="button" className="pt-button pt-large pt-fill">
-                        Submit
-                        </button>
-                    </Link>
+                    <button
+                        type="button"
+                        className="pt-button pt-large pt-fill"
+                        onClick={this.handleSubmit}
+                    >
+                    Submit
+                    </button>
 
                     <Link to="/">
                         <button type="button" className="pt-button pt-large pt-fill cancel" style={{ marginTop: 20 }}>
