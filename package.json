@@ -15,7 +15,6 @@
     "cross-spawn": "4.0.2",
     "css-loader": "0.26.0",
     "detect-port": "1.0.1",
-    "dotenv": "2.0.0",
     "eslint": "3.8.1",
     "eslint-config-react-app": "^0.5.0",
     "eslint-loader": "1.6.0",
@@ -51,6 +50,7 @@
   "dependencies": {
     "@blueprintjs/core": "^1.35.5",
     "dotenv": "^2.0.0",
+    "fabric": "^2.0.1",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.6.2",
     "react-color": "^2.13.8",

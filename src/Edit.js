@@ -4,6 +4,7 @@ import SimpleStorageContract from '../build/contracts/SimpleStorage.json';
 import getWeb3 from './utils/getWeb3';
 import { button } from "@blueprintjs/core";
 import { SketchPicker } from 'react-color';
+import { Icon } from "@blueprintjs/core";
 import Nav from './Nav';
 
 class Edit extends Component {
@@ -75,36 +76,39 @@ class Edit extends Component {
     var canvas = document.getElementById('pixel-canvas');
     this.writeMessage(canvas);
 
-    /*
-    canvas.addEventListener('mousemove', function(evt) {
-      var mousePos = this.getMousePos(canvas, evt);
-      var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-      this.writeMessage(canvas, message);
+    canvas.addEventListener('click', (event) => {
+      var context = canvas.getContext('2d');
+      var mousePosition = this.getMousePosition(canvas, event);
+      var gridX = Math.floor(parseInt(mousePosition.x, 10) / 8);
+      var gridY = Math.floor(parseInt(mousePosition.y, 10) / 8);
+      
+      context.fillRect(gridX * 8, gridY * 8, 8, 8);
+      context.fillStyle = 'white';
     }, false);
-    */
   }
 
   writeMessage(canvas, message) {
     var context = canvas.getContext('2d');
     
     context.strokeStyle = "black"; // Draws the canvas border
-    context.rect(0, 0, 1000, 1000);
+    context.rect(0, 0, 600, 600);
     context.stroke();
     
-    var countOfGridSquares = 600;
+    var countOfGridSquares = 75;
     var colors = ['red', 'blue', 'green'];  
 
     var step = 8;
     for (var x = 0; x <= countOfGridSquares; x++) {
         for(var y = 0; y <= countOfGridSquares; y++) {
-          context.fillRect(x*step, y*step, 8, 8);
+          context.fillRect(x * step, y * step, step, step);
           context.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-        }
+        } 
     }
   }
 
-  getMousePos(canvas, evt) {
+  getMousePosition(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
+
     return {
       x: evt.clientX - rect.left,
       y: evt.clientY - rect.top
@@ -138,22 +142,34 @@ class Edit extends Component {
             </div>
             <div className="col">
                 <div className='panel'>
-                <h1>Project Details</h1>
-                <span>ethdenver project</span>
-                <span>Hello ethdenver! Welcome to the first live demo of Pixel Place; the blockchain-enabled art project!</span>
-
-                <h2 style={{ marginTop: 25 }}>Project Stats</h2>
-                <span>{`${ethAvgPixelCost} ETH/pixel`}</span>
-                <span>{`${ethFundedAmt} ETH funded`}</span>
-                <span>{`${projectEdits} project edits`}</span>
+                    <h1>Transaction Details</h1>
+                    <span>
+                        <Icon iconName='dollar' className='ico' />
+                        {`${ethAvgPixelCost} ETH/pixel`}
+                    </span>
+                    <span>
+                        <Icon iconName='bank-account' className='ico' />
+                        {`${ethFundedAmt} ETH funded`}
+                    </span>
+                    <span>
+                        <Icon iconName='helper-management' className='ico' />
+                        {`${projectEdits} project edits`}
+                    </span>
                 </div>
 
-                <Link to="/">
-                    <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
-                    <span className="pt-icon-standard pt-icon-edit"></span>
-                    Cancel
-                    </button>
-                </Link>
+                <div style={{ flexDirection: 'row' }}>
+                    <Link to="/">
+                        <button type="button" className="pt-button pt-large pt-fill">
+                        Submit
+                        </button>
+                    </Link>
+
+                    <Link to="/">
+                        <button type="button" className="pt-button pt-large pt-fill cancel" style={{ marginTop: 20 }}>
+                        Cancel
+                        </button>
+                    </Link>
+                </div>
             </div>
         </div>
       </div>

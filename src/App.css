@@ -5,7 +5,7 @@ body,
 }
 
 body {
-  background-image: url('/images/day.png');
+  background-image: url('/images/background.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-color: #7BD434;
@@ -113,6 +113,16 @@ h1, h2, h3 {
   box-shadow: 10px 10px 0px 0px #725de6 !important;
 }
 
+.pt-button.cancel {
+  background-color: #db3737 !important;
+  box-shadow: 10px 10px 0px 0px #ae2323 !important;
+}
+
 .pt-button .pt-icon-standard {
   color: white !important;
+}
+
+.ico {
+  margin-right: 11px;
+  color: #6d62de;
 }

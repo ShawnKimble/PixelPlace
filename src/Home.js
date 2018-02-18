@@ -4,11 +4,12 @@ import SimpleStorageContract from '../build/contracts/SimpleStorage.json';
 import CanvasPropertiesContract from '../build/contracts/SimpleStorage.json';
 import getWeb3 from './utils/getWeb3';
 import { button } from "@blueprintjs/core";
+import { Icon } from "@blueprintjs/core";
 import Nav from './Nav';
 
 class Home extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       storageValue: 0,
@@ -95,14 +96,6 @@ class Home extends Component {
   setupCanvas() {
     var canvas = document.getElementById('pixel-canvas');
     this.writeMessage(canvas);
-
-    /*
-    canvas.addEventListener('mousemove', function(evt) {
-      var mousePos = this.getMousePos(canvas, evt);
-      var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-      this.writeMessage(canvas, message);
-    }, false);
-    */
   }
 
   writeMessage(canvas, message) {
@@ -157,19 +150,34 @@ class Home extends Component {
             </div>
             <div className="col">
                 <div className='panel'>
-                <h1>Project Details</h1>
-                <span>ethdenver project</span>
-                <span>Hello ethdenver! Welcome to the first live demo of Pixel Place; the blockchain-enabled art project!</span>
+                    <h1>Project Details</h1>
+                    <span>
+                        <Icon iconName='document' className='ico' />
+                        ethdenver project
+                    </span>
+                    <span>
+                        <Icon iconName='align-left' className='ico' />
+                        Hello ethdenver! Welcome to the first live demo of Pixel Place; the blockchain-enabled art project!
+                    </span>
 
-                <h2 style={{ marginTop: 25 }}>Project Stats</h2>
-                <span>{`${ethAvgPixelCost} ETH/pixel`}</span>
-                <span>{`${ethFundedAmt} ETH funded`}</span>
-                <span>{`${projectEdits} project edits`}</span>
+                    <h2 style={{ marginTop: 25 }}>Project Stats</h2>
+                    <span>
+                        <Icon iconName='dollar' className='ico' />
+                        {`${ethAvgPixelCost} ETH/pixel`}
+                    </span>
+                    <span>
+                        <Icon iconName='bank-account' className='ico' />
+                        {`${ethFundedAmt} ETH funded`}
+                    </span>
+                    <span>
+                        <Icon iconName='helper-management' className='ico' />
+                        {`${projectEdits} project edits`}
+                    </span>
                 </div>
 
                 <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
-                <span className="pt-icon-standard pt-icon-edit"></span>
-                Share Project
+                    <Icon iconName='social-media' className='ico' />
+                    Share Project
                 </button>
             </div>
         </div>
