@@ -50,14 +50,7 @@ class Home extends Component {
     //  simpleStorage.deployed("anvasName", 600, 600).then((instance) => {
       simpleStorage.deployed().then((instance) => {  
         pixelPropsInstance = instance
-        return pixelPropsInstance.UpdatePixels(333, "ff0000", "inPixelStatus", {from: accounts[0]});
-      }).then((result) => {
-        console.log("waitin....")
-        // Get the value from the contract to prove it worked.
-        return pixelPropsInstance.getPixelProperty(accounts[0])
-      }).then((result) => {
-        // Update state with the result.
-      //console.log("get result " + result)
+        //return pixelPropsInstance.UpdatePixels(333, "ff0000", "inPixelStatus", {from: accounts[0]});
       })
     })
   }

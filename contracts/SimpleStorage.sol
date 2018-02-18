@@ -35,7 +35,12 @@ pragma solidity ^0.4.18;
       pixelProperties.push(pixelProperty);
     }
 
-  function getPixelProperty() public view returns (string) {
-  return pixelProperties[0].pixelColor;
- }    
+  function getPixelProperty() public view returns (PixelProperty[]) {
+    return pixelProperties;
+ }  
+
+   function getLatestCanvas() public view returns (string) {
+    return pixelProperties[0].pixelColor;
+ }  
+
 }

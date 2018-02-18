@@ -75,7 +75,11 @@ class Edit extends Component {
         context.fillStyle = this.state.selectedColor;
 
         this.state.web3.eth.getAccounts((error, accounts) => {
-          this.state.pixelPropsInstance.UpdatePixels(pixelIndex, this.state.selectedColor, "inPixelStatus", { from: accounts[0] });
+          this.state.pixelPropsInstance
+          .UpdatePixels(pixelIndex, this.state.selectedColor, "inPixelStatus", { from: accounts[0] })
+          .then(()=>{
+            window.location.href="/";
+            })
         });
     }, false);
   }
