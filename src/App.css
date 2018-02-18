@@ -111,6 +111,7 @@ h1, h2, h3 {
   color: white !important;
   border-radius: 0px;
   box-shadow: 10px 10px 0px 0px #725de6 !important;
+  text-transform: uppercase;
 }
 
 .pt-button.cancel {
@@ -125,4 +126,8 @@ h1, h2, h3 {
 .ico {
   margin-right: 11px;
   color: #6d62de;
+}
+
+.logo {
+  margin-left: 12px;
 }

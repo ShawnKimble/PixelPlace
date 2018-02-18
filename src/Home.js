@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import SimpleStorageContract from '../build/contracts/SimpleStorage.json';
 import CanvasPropertiesContract from '../build/contracts/SimpleStorage.json';
 import getWeb3 from './utils/getWeb3';
-import { button } from "@blueprintjs/core";
-import { Icon } from "@blueprintjs/core";
+import { button, Icon } from '@blueprintjs/core';
+//import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Nav from './Nav';
 
 class Home extends Component {
@@ -52,7 +52,7 @@ class Home extends Component {
     simpleStorage.setProvider(this.state.web3.currentProvider)
 
     // Declaring this for later so we can chain functions on SimpleStorage.
-    var simpleStorageInstance
+    var simpleStorageInstance;
 
     // Get accounts.
     this.state.web3.eth.getAccounts((error, accounts) => {
@@ -114,12 +114,21 @@ class Home extends Component {
         <Nav />
         <div id="main" className="container">
             <div className="col">
-                <Link to="/edit">
-                    <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
-                    <span className="pt-icon-standard pt-icon-edit"></span>
-                    Edit Project
-                    </button>
-                </Link>
+                <div style={{ flexDirection: 'row', width: 300 }}>
+                    <Link to="/edit">
+                        <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
+                        <span className="pt-icon-standard pt-icon-edit"></span>
+                            Edit
+                        </button>
+                    </Link>
+
+                    <Link to="#">
+                        <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300, marginTop: 20 }}>
+                        <span className="pt-icon-standard pt-icon-play"></span>
+                            Replay
+                        </button>
+                    </Link>
+                </div>
             </div>
             <div className="col">
                 <div id="pixel-canvas-wrapper">
@@ -155,7 +164,7 @@ class Home extends Component {
 
                 <button type="button" className="pt-button pt-large pt-fill" style={{ width: 300 }}>
                     <Icon iconName='social-media' className='ico' />
-                    Share Project
+                    Share Craft
                 </button>
             </div>
         </div>

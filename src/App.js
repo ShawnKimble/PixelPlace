@@ -3,11 +3,12 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 import Home from './Home';
 import Edit from './Edit';
 
-import './fonts/supertext/style.css'
-import './css/open-sans.css'
-import './css/pure-min.css'
-import './css/@blueprintjs/core/dist/blueprint.css'
-import './App.css'
+import './fonts/supertext/style.css';
+import './fonts/ft-blockbusta/style.css';
+import './css/open-sans.css';
+import './css/pure-min.css';
+import './css/@blueprintjs/core/dist/blueprint.css';
+import './App.css';
 
 class App extends Component {
   render() {
