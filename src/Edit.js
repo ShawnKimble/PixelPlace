@@ -14,9 +14,7 @@ class Edit extends Component {
     this.state = {
       pixelPropsInstance: null,
       web3: null,
-      background: '#fff',
-      selectedGridX: null,
-      selectedGridY: null
+      selectedColor: '#fff'
     }
   }
 
@@ -69,19 +67,16 @@ class Edit extends Component {
         var mousePosition = this.getMousePosition(canvas, event);
         var gridX = Math.floor(parseInt(mousePosition.x, 10) / 8);
         var gridY = Math.floor(parseInt(mousePosition.y, 10) / 8);
-
+        
+        var pixelIndex = ((75 * gridY)+gridX);
+        
         //Fill in the selected block with the users color selection
         context.fillRect(gridX * 8, gridY * 8, 8, 8);
-        context.fillStyle = this.state.background;
+        context.fillStyle = this.state.selectedColor;
 
-        this.setState({
-            selectedGridX: gridX,
-            selectedGridY: gridY
-        }, () => {
           this.state.web3.eth.getAccounts((error, accounts) => {
-            this.state.pixelPropsInstance.UpdatePixels(333, "ff0000", "inPixelStatus", {from: accounts[0]});
-          })
-        });
+          this.state.pixelPropsInstance.UpdatePixels(pixelIndex, this.state.selectedColor, "inPixelStatus", { from: accounts[0] });
+        })
     }, false);
   }
 
@@ -110,9 +105,10 @@ class Edit extends Component {
   }
 
   handleColorChange = (color) => {
-    this.setState({ background: color.hex });
+    this.setState({ selectedColor: color.hex });
   }
 
+  //@TODO: Support bulk pixel transactions
   handleSubmit = () => {
       console.log('@@@@@@SUBMIT', this.state.selectedGridX, this.state.selectedGridY);
   }
@@ -159,14 +155,14 @@ class Edit extends Component {
                     <button
                         type="button"
                         className="pt-button pt-large pt-fill"
-                        onClick={this.handleSubmit}
+                        //onClick={this.handleSubmit}
                     >
-                    Submit
+                      Submit
                     </button>
 
                     <Link to="/">
                         <button type="button" className="pt-button pt-large pt-fill cancel" style={{ marginTop: 20 }}>
-                        Cancel
+                          Cancel
                         </button>
                     </Link>
                 </div>
