@@ -4,7 +4,6 @@ import Home from './Home';
 import Edit from './Edit';
 
 import './fonts/supertext/style.css';
-import './fonts/ft-blockbusta/style.css';
 import './css/open-sans.css';
 import './css/pure-min.css';
 import './css/@blueprintjs/core/dist/blueprint.css';
