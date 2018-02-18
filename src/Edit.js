@@ -160,7 +160,7 @@ class Edit extends Component {
                 <div style={{ flexDirection: 'row' }}>
                     <Link to="/">
                         <button type="button" className="pt-button pt-large pt-fill">
-                        Confirm Transaction
+                        Submit
                         </button>
                     </Link>
 
