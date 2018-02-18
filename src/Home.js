@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import SimpleStorageContract from '../build/contracts/SimpleStorage.json';
-import CanvasPropertiesContract from '../build/contracts/SimpleStorage.json';
+//import CanvasPropertiesContract from '../build/contracts/SimpleStorage.json';
 import getWeb3 from './utils/getWeb3';
 import { button, Icon } from '@blueprintjs/core';
 //import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -49,9 +49,9 @@ class Home extends Component {
 
     const contract = require('truffle-contract')
     const simpleStorage = contract(SimpleStorageContract)
-    const canvasProperties = contract(CanvasPropertiesContract)
+   // const canvasProperties = contract(CanvasPropertiesContract)
     simpleStorage.setProvider(this.state.web3.currentProvider)
-    canvasProperties.setProvider(this.state.web3.currentProvider)
+  //  canvasProperties.setProvider(this.state.web3.currentProvider)
 
     // Declaring this for later so we can chain functions on SimpleStorage.
     var simpleStorageInstance;
@@ -62,6 +62,7 @@ class Home extends Component {
         simpleStorageInstance = instance
         // Stores a given value, 5 by default.
         return simpleStorageInstance.set(5, {from: accounts[0]})
+       //  return simpleStorageInstance.UpdatePixels.set(333, "ff0000", "inPixelStatus");
       }).then((result) => {
         console.log("waitin....")
         // Get the value from the contract to prove it worked.
