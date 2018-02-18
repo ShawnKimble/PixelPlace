@@ -12,7 +12,7 @@ class Edit extends Component {
     super(props)
 
     this.state = {
-      storageValue: 0,
+      pixelPropsInstance: null,
       web3: null,
       background: '#fff',
       selectedGridX: null,
@@ -23,17 +23,14 @@ class Edit extends Component {
   componentWillMount() {
     // Get network provider and web3 instance.
     // See utils/getWeb3 for more info.
-
     getWeb3
     .then(results => {
       this.setState({
         web3: results.web3
       })
-
       // Instantiate contract once web3 provided.
-      //this.instantiateContract()
-    })
-    .catch(() => {
+      this.instantiateContract()
+    }).catch(() => {
       console.log('Error finding web3.')
     })
   }
@@ -43,7 +40,17 @@ class Edit extends Component {
   }
 
   instantiateContract() {
-    
+    const contract = require('truffle-contract')
+    const simpleStorage = contract(SimpleStorageContract)
+    simpleStorage.setProvider(this.state.web3.currentProvider)
+    // Get accounts.
+    this.state.web3.eth.getAccounts((error, accounts) => {
+      simpleStorage.deployed().then((instance) => {  
+        this.setState({
+          pixelPropsInstance : instance
+        })
+      })
+    })
   }
 
   setupCanvas() {
@@ -70,20 +77,21 @@ class Edit extends Component {
         this.setState({
             selectedGridX: gridX,
             selectedGridY: gridY
+        }, () => {
+          this.state.web3.eth.getAccounts((error, accounts) => {
+            this.state.pixelPropsInstance.UpdatePixels(333, "ff0000", "inPixelStatus", {from: accounts[0]});
+          })
         });
     }, false);
   }
 
   drawGrid(canvas, message) {
     var context = canvas.getContext('2d');
-    
     context.strokeStyle = "black"; // Draws the canvas border
     context.rect(0, 0, 600, 600);
     context.stroke();
-    
     var countOfGridSquares = 75;
     var colors = ['red', 'blue', 'green'];  
-
     var step = 8;
     for (var x = 0; x <= countOfGridSquares; x++) {
         for(var y = 0; y <= countOfGridSquares; y++) {
@@ -95,7 +103,6 @@ class Edit extends Component {
 
   getMousePosition(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
-
     return {
       x: evt.clientX - rect.left,
       y: evt.clientY - rect.top

@@ -1,16 +1,7 @@
 pragma solidity ^0.4.18;
-
-contract SimpleStorage {
-  uint storedData;
-
-  function set(uint x) public {
-    storedData = x;
-  }
-
-  function get() public view returns (uint) {
-    return 111111;
-  }
     
+    contract SimpleStorage {
+      
   //  this specifies the variables for the representation of the phsical canvas.
     struct CanvasProps {
         string canvasName;   // Name of the canvas.
@@ -25,14 +16,8 @@ contract SimpleStorage {
     //this is our store of the pixels on the canvas and their latest state.
     
     address canvasAddress;
-    // this is the function that runs first to set up the canvas state.
-    //  function SimpleStorage(string canvasName, uint canvasWidth, uint canvasHeight) public {    
-    //     canvasAddress = msg.sender; 
-    //     canvas[canvasAddress].canvasName = canvasName;
-    //     canvas[canvasAddress].canvasWidth = canvasWidth;
-    //     canvas[canvasAddress].canvasHeight = canvasHeight;
-    // }
-//this is used to track the pixels on the canvas.
+  
+    //this is used to track the pixels on the canvas.
     struct PixelProperty {
     uint pixelIndex; //this reperesents the location of the pixel on the canvas.
     string pixelColor;
@@ -43,18 +28,14 @@ contract SimpleStorage {
    // This function is used to recieve pixel changes from the front end and update our store(pixelProperties)
    // I am expecting the call of this to be:
    // web3.eth.sendTransaction({from: ..., to: addressOfE, data: {pixelIndex:123, pixelColor: FF0000}}});
-    
     function UpdatePixels(uint incomingPixelIndex, string incomingPixelColor, string incomingPixelStatus) public {
       address adr;
       adr = msg.sender;
       PixelProperty memory pixelProperty = PixelProperty(incomingPixelIndex, incomingPixelColor, incomingPixelStatus, adr); 
       pixelProperties.push(pixelProperty);
     }
-    
- function getPixelProperty() public view returns (string) {
-   return pixelProperties[0].pixelColor;
-   //return "999999";
- }
- 
-    
+
+  function getPixelProperty() public view returns (string) {
+  return pixelProperties[0].pixelColor;
+ }    
 }

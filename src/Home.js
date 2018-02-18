@@ -39,60 +39,29 @@ class Home extends Component {
   }
 
   instantiateContract() {
-    /*
-     * SMART CONTRACT EXAMPLE
-     *
-     * Normally these functions would be called in the context of a
-     * state management library, but for convenience I've placed them here.
-     */
-
-    const contract = require('truffle-contract')
+   const contract = require('truffle-contract')
     const simpleStorage = contract(SimpleStorageContract)
     simpleStorage.setProvider(this.state.web3.currentProvider)
-  //  canvasProperties.setProvider(this.state.web3.currentProvider)
 
-    // Declaring this for later so we can chain functions on SimpleStorage.
-    var simpleStorageInstance;
+    var pixelPropsInstance;
 
     // Get accounts.
     this.state.web3.eth.getAccounts((error, accounts) => {
     //  simpleStorage.deployed("anvasName", 600, 600).then((instance) => {
       simpleStorage.deployed().then((instance) => {  
-        simpleStorageInstance = instance
-        // Stores a given value, 5 by default.
-       // return simpleStorageInstance.set(5, {from: accounts[0]})
-        return simpleStorageInstance.UpdatePixels(333, "ff0000", "inPixelStatus", {from: accounts[0]});
+        pixelPropsInstance = instance
+        return pixelPropsInstance.UpdatePixels(333, "ff0000", "inPixelStatus", {from: accounts[0]});
       }).then((result) => {
         console.log("waitin....")
         // Get the value from the contract to prove it worked.
-        //return simpleStorageInstance.get.call(accounts[0])
-        return simpleStorageInstance.getPixelProperty(accounts[0])
+        return pixelPropsInstance.getPixelProperty(accounts[0])
       }).then((result) => {
         // Update state with the result.
-       // return this.setState({ storageValue: result.c[0] })
-      console.log("get result " + result)
+      //console.log("get result " + result)
       })
     })
   }
-
-  // this.state.web3.eth.getAccounts((error, accounts) => {
-  //   canvasProperties.deployed().then((instance) => {
-  //     canvasPropertiesInstance = instance
-
-  //     // Stores a given value, 5 by default.
-  //     return canvasPropertiesInstance.set(888, {from: accounts[0]})
-  //   }).then((result) => {
-  //     console.log("waitin canvasPropertiesInstance....")
-  //     // Get the value from the contract to prove it worked.
-  //     return canvasPropertiesInstance.get.call(accounts[0])
-  //   }).then((result) => {
-  //     // Update state with the result.
-  //     console.log("ddddddd")
-  //     return this.setState({ storageValue: result.c[0] })
-  //   })
-  // })
-
-
+  
   setupCanvas() {
     var canvas = document.getElementById('pixel-canvas');
     this.drawGrid(canvas);
