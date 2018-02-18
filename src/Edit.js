@@ -15,7 +15,7 @@ class Edit extends Component {
       pixelPropsInstance: null,
       web3: null,
       selectedColor: '#fff'
-    }
+    };
   }
 
   componentWillMount() {
@@ -29,8 +29,8 @@ class Edit extends Component {
       // Instantiate contract once web3 provided.
       this.instantiateContract()
     }).catch(() => {
-      console.log('Error finding web3.')
-    })
+      console.log('Error finding web3.');
+    });
   }
 
   componentDidMount() {
@@ -45,10 +45,10 @@ class Edit extends Component {
     this.state.web3.eth.getAccounts((error, accounts) => {
       simpleStorage.deployed().then((instance) => {  
         this.setState({
-          pixelPropsInstance : instance
-        })
-      })
-    })
+          pixelPropsInstance: instance
+        });
+      });
+    });
   }
 
   setupCanvas() {
@@ -74,15 +74,15 @@ class Edit extends Component {
         context.fillRect(gridX * 8, gridY * 8, 8, 8);
         context.fillStyle = this.state.selectedColor;
 
-          this.state.web3.eth.getAccounts((error, accounts) => {
+        this.state.web3.eth.getAccounts((error, accounts) => {
           this.state.pixelPropsInstance.UpdatePixels(pixelIndex, this.state.selectedColor, "inPixelStatus", { from: accounts[0] });
-        })
+        });
     }, false);
   }
 
   drawGrid(canvas, message) {
     var context = canvas.getContext('2d');
-    context.strokeStyle = "black"; // Draws the canvas border
+    context.strokeStyle = "black"; //Draws the canvas border
     context.rect(0, 0, 600, 600);
     context.stroke();
     var countOfGridSquares = 75;
@@ -125,8 +125,8 @@ class Edit extends Component {
             <div id="main" className="container">
             <div className="col">
                 <SketchPicker
-                    color={ this.state.background }
-                    onChangeComplete={ this.handleColorChange }
+                    color={this.state.selectedColor}
+                    onChangeComplete={this.handleColorChange}
                 />
             </div>
             <div className="col">
